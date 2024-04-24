@@ -1,12 +1,9 @@
 
-let loggedIn = $state(false);
+import { writable, type Writable } from "svelte/store";
 
-export function userStore() {
-    return {
-        get loggedIn() {
-            return loggedIn;
-        },
-        setLogin: () => (loggedIn = true),
-        setLogout: () => (loggedIn = false),
-    };
-}
+
+export const loggedIn: Writable<boolean> = writable(false);
+
+
+export const setLogin = () => (loggedIn.set(true));
+export const setLogout = () => (loggedIn.set(false));

@@ -1,3 +1,15 @@
-<h1>Welcome to your library project</h1>
-<p>Create your package using @sveltejs/package and preview/showcase your work with SvelteKit</p>
-<p>Visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to read the documentation</p>
+<script>
+	import NotSignedIn from '$lib/components/NotSignedIn.svelte';
+	import SignedIn from '$lib/components/SignedIn.svelte';
+</script>
+
+<h1>+page.svelte</h1>
+<SignedIn let:user let:signOut let:auth>
+	You are signed in with {user.uid}
+	<button on:click={signOut}>Sign Out</button>
+	{auth.currentUser?.email}
+</SignedIn>
+
+<NotSignedIn>
+	<a href="/user/sign-in">SignIn</a>
+</NotSignedIn>

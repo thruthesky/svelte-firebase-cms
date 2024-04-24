@@ -1,6 +1,6 @@
 import type { FirebaseApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { userStore } from "./store/user.store.svelte";
+import { userStore } from "./store/user.store.svelte.js";
 
 
 interface SvelteFireOptions {

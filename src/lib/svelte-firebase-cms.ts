@@ -3,15 +3,15 @@ import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { userStore } from "./store/user.store.svelte.js";
 
 
-interface SvelteFireOptions {
+interface SvelteFirebaseCmsOptions {
     app: FirebaseApp;
 }
 
 
-export class SvelteFire {
+export class SvelteFirebaseCms {
     static initialized = false;
-    static options: SvelteFireOptions | null = null;
-    static init(options: SvelteFireOptions) {
+    static options: SvelteFirebaseCmsOptions | null = null;
+    static init(options: SvelteFirebaseCmsOptions) {
         if (this.initialized) return;
 
         this.options = options;

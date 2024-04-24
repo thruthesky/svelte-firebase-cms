@@ -1,20 +1,139 @@
-# create-svelte
+# SvelteFire
 
-Everything you need to build a Svelte library, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+Svelte library for FireFlutter
 
-Read more about creating a library [in the docs](https://kit.svelte.dev/docs/packaging).
 
-## Creating a project
 
-If you're seeing this, you've probably already done this step. Congrats!
+## Initialization
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+The recommended way of intialization is that put the code `SvelteFire.init()` inside `src/routes/+layout.svelte`.
 
-# create a new project in my-app
-npm create svelte@latest my-app
+```ts
+import { app } from '$lib/client/init.firebase.client';
+import { SvelteFire } from '$lib/sveltefire/svelte-fire';
+SvelteFire.init({ app });
 ```
+
+
+Below is the `src/lib/client/init.firebase.client`.
+
+```ts
+import { initializeApp } from "firebase/app";
+const firebaseConfig: { [key: string]: string; } = {
+    apiKey: "AIzaSyA2q3ux4nqf2-iWY6nPTqqCRvqHQ70aWfU",
+    authDomain: "silbus.firebaseapp.com",
+    databaseURL: "https://silbus-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "silbus",
+    storageBucket: "silbus.appspot.com",
+    messagingSenderId: "575893880018",
+    appId: "1:575893880018:web:7ce155406741346aefc10b",
+    measurementId: "G-3KQTNK89WP"
+};
+export const app = initializeApp(firebaseConfig);
+```
+
+
+## Login
+
+To use sveltefire, the user must login.
+SvelteFire does not provide any login mechanism. It's up to you how you desgin your app. You may use email/password login or Phone sign-in, Google sign-in, etc.
+
+
+
+
+## Common Patterns
+
+### Fetch Data from Firestore for Authenticated Users
+
+First, Use the `SignedIn` component to access the UID of the current user. Second, pass that UID to the `Doc` or `Collection` component to fetch a Firestore document owned by that user. 
+
+```svelte
+  <SignedIn let:user>
+    <Doc ref={`users/${user.uid}`} let:data={user}>
+        <h2>{user.displayName}</h2>
+    </Doc>
+  </SignedIn>
+```
+
+
+### Hydrate data from server side
+
+The component `Doc`, `Collection`, `Value`, `ValueList` hydrates the SSR data.
+
+
+
+
+## NotSignedIn
+
+```svelte
+<NotSignedIn>
+	<a href="/user/sign-in">SignIn</a>
+</NotSignedIn>
+```
+
+
+## SignedIn
+
+The `SignedIn` component renders content for the current user. It is a wrapper around the `userStore`. If the user is not signed in, the children will not be rendered. 
+
+### Slot Props
+
+- `user` - The current Firebase user
+- `auth` - The current Firebase auth instance
+- `signOut` - A function to sign out the current user
+
+
+
+
+```svelte
+<SignedIn let:user let:signOut let:auth>
+	You are signed in with {user.uid}
+	<button on:click={signOut}>Sign Out</button>
+	{auth.currentUser?.email}
+</SignedIn>
+
+```
+
+
+
+## Doc
+
+Display a document.
+
+## Collection
+
+Display lists of documents in that collection
+
+- `infiniteScroll` is an option to scroll infinitely.
+
+
+
+
+
+## Image
+
+Display an image from storage.
+
+## Value
+
+Get a value of node and display
+
+
+## ValueList
+
+Display a list of value node
+
+
+## Upload
+
+display a UI for file upload into storage
+
+## MyDoc
+
+## UserDoc
+
+
+
 
 ## Developing
 

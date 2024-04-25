@@ -1,11 +1,18 @@
-<script>
+<script lang="ts">
 	import NotSignedIn from '$lib/components/NotSignedIn.svelte';
 	import SignedIn from '$lib/components/SignedIn.svelte';
 	import Value from '$lib/components/Value.svelte';
 	import ValueList from '$lib/components/ValueList.svelte';
+
+	export let data: any = undefined;
 </script>
 
 <h1>+page.svelte</h1>
+
+<hr />
+{data.firebaseOptions}
+<hr />
+
 <SignedIn let:user let:signOut let:auth>
 	You are signed in with {user.uid}
 	<button on:click={signOut}>Sign Out</button>
@@ -19,18 +26,18 @@
 <p>
 	<Value
 		path="post-all-summaries/-NvgtY78Qcowz-zwjRnN"
-		hydrate={{ title: 'THIS IS TITLE' }}
+		hydrate={{ title: 'THIS IS TITLE P' }}
 		let:data
 	>
 		{#each Object.keys(data) as key}
-			{key}: {data[key]}
+			{key}: {data[key]} &nbsp;
 		{/each}
 	</Value>
 </p>
 
 <Value path="post-all-summaries/-NvgtY78Qcowz-zwjRnN" hydrate={{ title: 'THIS IS TITLE' }} let:data>
 	{#each Object.keys(data) as key}
-		{key}: {data[key]}
+		{key}: {data[key]} &nbsp;
 	{/each}
 </Value>
 
@@ -38,7 +45,7 @@
 	{#each data as item}
 		<p>
 			{#each Object.keys(item) as key}
-				{key}: {item[key]}
+				{key}: {item[key]}&nbsp;
 			{/each}
 		</p>
 	{/each}

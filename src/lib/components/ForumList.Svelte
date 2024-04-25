@@ -1,13 +1,11 @@
 <script lang="ts">
-	import { valueListStore } from '$lib/store/value.store.js';
-
-	import { getDatabase } from 'firebase/database';
+	import { type DatabaseReference, type Database, getDatabase } from 'firebase/database';
 
 	export let path: string;
 	export let hydrate: any[] = [];
 
 	const rtdb = getDatabase();
-	let store = valueListStore(rtdb!, path, hydrate);
+	let store = forumListStore(rtdb, 'post-summaries-test/generated-data');
 </script>
 
 {#if $store !== undefined}

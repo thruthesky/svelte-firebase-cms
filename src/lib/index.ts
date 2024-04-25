@@ -14,5 +14,5 @@ export {
     SignedIn,
     NotSignedIn,
     Value,
-    ValueList
+    ValueList,
 };

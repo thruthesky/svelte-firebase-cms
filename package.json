@@ -1,7 +1,7 @@
 {
 	"name": "svelte-firebase-cms",
 	"license": "MIT",
-	"version": "0.0.6",
+	"version": "0.0.7",
 	"scripts": {
 		"dev": "vite dev",
 		"dev:dev4": "vite dev --open --mode dev4",

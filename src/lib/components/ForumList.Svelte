@@ -1,12 +1,12 @@
 <script lang="ts">
 	import ValueList from './ValueList.svelte';
-	import { valueListStore } from '$lib/store/value.store.js';
+	import store from '$lib/store/value-list.store.js';
 
 	export let category: string;
 	export let initialData: any[] = [];
 
 	function onFetch() {
-		valueListStore.fetch();
+		store.fetch();
 	}
 </script>
 

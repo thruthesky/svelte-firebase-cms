@@ -17,8 +17,8 @@ import { get, writable, type Writable } from "svelte/store";
 
 const orderField = 'order';
 let lastOderValue: any | undefined = undefined;
+let loading = false;
 export const noMoreData: Writable<boolean> = writable(false);
-
 export const values: Writable<MapMap | undefined> = writable(undefined);
 
 let subscriptions: Array<Unsubscribe> = [];
@@ -34,9 +34,27 @@ interface FetchOptions {
     limit: number;
 }
 
+export function reset() {
+    lastOderValue = undefined;
+    loading = false;
+    noMoreData.set(false);
+    values.set(undefined);
+    unsubscribe();
+}
+
 export function fetch(o: FetchOptions) {
 
-    if (get(noMoreData)) return;
+    if (get(noMoreData)) {
+        console.log("no more data. don't fetch. just return");
+        return;
+    }
+    if (loading) {
+        console.log("In loading. don't fetch. just return");
+        return;
+    }
+    loading = true;
+
+    console.log("fetching data with: ", o.path, o.limit);
 
 
     const listRef: DatabaseReference = ref(o.rtdb, o.path);
@@ -61,6 +79,9 @@ export function fetch(o: FetchOptions) {
         });
 
         values.set(data);
+
+        /** 다음 페이지를 로드 하는 중에, DB 가 업데이터 되어, loading 이 false 가 될 수 있다. 이 경우 무시해도 된다. */
+        loading = false;
 
         if (snapshot.size === 0 || snapshot.size < o.limit) {
             noMoreData.set(true);

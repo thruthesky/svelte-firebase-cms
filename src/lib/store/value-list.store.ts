@@ -13,7 +13,6 @@ export default function valueListStore<T = any>(
     rtdb: Database,
     path: string,
     hydrate: T[] = [],
-    limit: number = 5,
     orderBy: string = 'order',
 ) {
     const listRef: DatabaseReference = dbRef(rtdb, path);
@@ -22,8 +21,6 @@ export default function valueListStore<T = any>(
         listRef,
         orderByChild(orderBy),
     );
-    if (hydrate.length > 0) q = query(q, startAfter((hydrate[hydrate.length - 1] as any)[orderBy]));
-    q = query(q, limitToFirst(limit));
 
     const { subscribe } = writable<T[]>(hydrate, (set) => {
         const unsubscribe = onValue(q, (snapshot) => {
@@ -41,20 +38,11 @@ export default function valueListStore<T = any>(
         return unsubscribe;
     });
 
-    function fetch() {
-        let q: Query = query(
-            listRef,
-            orderByChild(orderBy),
-        );
-        if (hydrate.length > 0) q = query(q, startAfter((hydrate[hydrate.length - 1] as any)[orderBy]));
-        q = query(q, limitToFirst(limit));
 
 
-    }
 
     return {
         subscribe,
-        fetch,
         ref: listRef,
     };
 }

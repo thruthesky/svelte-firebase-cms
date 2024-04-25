@@ -5,10 +5,6 @@
 	export let initialData: any[] = [];
 
 	let controller: ValueList;
-
-	function onFetch() {
-		console.log('store', controller.store?.fetch());
-	}
 </script>
 
 <ValueList
@@ -25,5 +21,3 @@
 		</p>
 	{/each}
 </ValueList>
-
-<button on:click={() => onFetch()}>Get More Posts</button>

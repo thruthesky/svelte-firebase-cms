@@ -14,11 +14,13 @@
 	<div>
 		<ValueList path="chat-joins/{user.uid}" let:data>
 			{#each data as item}
-				<button>
-					{#each Object.keys(item) as key}
-						{key}: {item[key]}
-					{/each}
-				</button>
+				<a href="/chat-room?id={item.nodeKey}"
+					><button>
+						{#each Object.keys(item) as key}
+							{key}: {item[key]}
+						{/each}
+					</button></a
+				>
 				<br />
 			{/each}
 		</ValueList>

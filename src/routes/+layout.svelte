@@ -8,6 +8,7 @@
 </script>
 
 <h1>+layout.svelte</h1>
-<a href="/">Home</a>
+<a href="/">Home</a> |
+<a href="/forum">Forum</a>
 <hr />
 <slot />

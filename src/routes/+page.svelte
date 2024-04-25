@@ -26,18 +26,18 @@
 <p>
 	<Value
 		path="post-all-summaries/-NvgtY78Qcowz-zwjRnN"
-		hydrate={{ title: 'THIS IS TITLE' }}
+		hydrate={{ title: 'THIS IS TITLE P' }}
 		let:data
 	>
 		{#each Object.keys(data) as key}
-			{key}: {data[key]}
+			{key}: {data[key]} &nbsp;
 		{/each}
 	</Value>
 </p>
 
 <Value path="post-all-summaries/-NvgtY78Qcowz-zwjRnN" hydrate={{ title: 'THIS IS TITLE' }} let:data>
 	{#each Object.keys(data) as key}
-		{key}: {data[key]}
+		{key}: {data[key]} &nbsp;
 	{/each}
 </Value>
 
@@ -45,7 +45,7 @@
 	{#each data as item}
 		<p>
 			{#each Object.keys(item) as key}
-				{key}: {item[key]}
+				{key}: {item[key]}&nbsp;
 			{/each}
 		</p>
 	{/each}

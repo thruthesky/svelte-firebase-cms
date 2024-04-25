@@ -1,5 +1,4 @@
 <script lang="ts">
-	import ForumList from '$lib/components/ForumList.svelte';
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
 	import { onMount } from 'svelte';
 

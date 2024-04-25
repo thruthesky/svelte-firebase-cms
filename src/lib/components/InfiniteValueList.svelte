@@ -37,15 +37,14 @@
 		const bottom = el.scrollHeight - el.clientHeight - el.scrollTop;
 		const top = el.scrollTop;
 
-		console.log('bottom', bottom);
-		console.log('top', top);
-
+		// Do something when the user scrolls to the top of the page
 		if (top <= 300) {
-			// console.log('--> (boom) reached at top;', top);
+			// console.log('--> (hit) reached at top;', top);
 		}
 
+		// Load more data when the user scrolls to the bottom of the page
 		if (bottom <= 300) {
-			console.log('--> (boom) reached at bottom;', bottom);
+			console.log('--> (hit) reached at bottom;', bottom);
 			fetch({ rtdb, path, limit: 5 });
 		}
 	}
@@ -61,8 +60,10 @@
 	{/each}
 
 	{#if $noMoreData}
+		<!-- Display this slot when there is no more data to load -->
 		<slot name="noMoreData" length={Object.keys($values).length} />
 	{/if}
 {:else}
+	<!-- Display this slot when data is loading -->
 	<slot name="loading" />
 {/if}

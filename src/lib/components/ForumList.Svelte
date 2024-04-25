@@ -1,17 +1,23 @@
 <script lang="ts">
-	import { type DatabaseReference, type Database, getDatabase } from 'firebase/database';
 	import ValueList from './ValueList.svelte';
+	import { valueListStore } from '$lib/store/value.store.js';
 
 	export let category: string;
 	export let initialData: any[] = [];
+
+	function onFetch() {
+		valueListStore.fetch();
+	}
 </script>
 
-<ValueList path={'post-summaries' + '/' + category} hydrate={initialData} let:data>
+<ValueList path={'posts-summary' + '/' + category} hydrate={initialData} let:data>
 	{#each data as item}
-		<p>
+		<p style="padding: 3em;">
 			{#each Object.keys(item) as key}
 				{key}: {item[key]}
 			{/each}
 		</p>
 	{/each}
 </ValueList>
+
+<button on:click={() => onFetch()}>Get More Posts</button>

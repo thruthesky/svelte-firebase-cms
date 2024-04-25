@@ -48,10 +48,6 @@ export function valueListStore<T = any>(
 ) {
     const listRef: DatabaseReference = dbRef(rtdb, path);
 
-
-
-
-
     let q: Query = query(
         listRef,
         orderByChild(orderBy),
@@ -78,8 +74,13 @@ export function valueListStore<T = any>(
         return unsubscribe;
     });
 
+    function fetch() { }
+
     return {
         subscribe,
+        fetch,
         ref: listRef,
     };
 }
+
+

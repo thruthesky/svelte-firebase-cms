@@ -7,5 +7,6 @@
 
 <h1>+layout.svelte</h1>
 <a href="/">Home</a>
+<a href="/test">Chat Room</a>
 <hr />
 <slot />

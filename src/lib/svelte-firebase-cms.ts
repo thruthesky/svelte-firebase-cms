@@ -1,6 +1,6 @@
 import type { FirebaseApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
-import { loggedIn, setLogin, setLogout } from "./store/user.store.svelte.js";
+import { loggedIn, setLogin, setLogout } from "./store/user.store.js";
 
 
 

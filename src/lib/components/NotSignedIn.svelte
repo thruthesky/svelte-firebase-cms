@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { loggedIn } from '$lib/store/user.store.svelte';
-	import { getAuth, type Auth } from 'firebase/auth';
+	import { loggedIn } from '$lib/store/user.store.js';
 
-	interface $$Slots {
-		default: { auth: Auth };
-	}
+	import { getAuth, type Auth } from 'firebase/auth';
 </script>
 
 {#if $loggedIn == false}

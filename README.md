@@ -20,13 +20,13 @@ Below is the `src/lib/client/init.firebase.client`.
 ```ts
 import { initializeApp } from "firebase/app";
 const firebaseConfig: { [key: string]: string; } = {
-    apiKey: "AIzaSyA2q3ux4nqf2-iWY6nPTqqCRvqHQ70aWfU",
+    apiKey: "AI....fU",
     authDomain: "silbus.firebaseapp.com",
-    databaseURL: "https://silbus-default-rtdb.asia-southeast1.firebasedatabase.app",
+    databaseURL: "https://silb.....st1.firebasedatabase.app",
     projectId: "silbus",
     storageBucket: "silbus.appspot.com",
     messagingSenderId: "575893880018",
-    appId: "1:575893880018:web:7ce155406741346aefc10b",
+    appId: "1:575.....fc10b",
     measurementId: "G-3KQTNK89WP"
 };
 export const app = initializeApp(firebaseConfig);
@@ -59,6 +59,9 @@ First, Use the `SignedIn` component to access the UID of the current user. Secon
 ### Hydrate data from server side
 
 The component `Doc`, `Collection`, `Value`, `ValueList` hydrates the SSR data.
+
+Use the hydration data from svelte kit into the components of `Value`, `ValueList`, `Doc`, `Collection`. The HTML source code will have the data of the hydration.
+
 
 
 
@@ -95,6 +98,34 @@ The `SignedIn` component renders content for the current user. It is a wrapper a
 ```
 
 
+## Value
+
+Get a value of node and display
+
+```svelte
+<Value path="post-all-summaries/-NvgtY78Qcowz-zwjRnN" hydrate={{ title: 'THIS IS TITLE' }} let:data>
+	{#each Object.keys(data) as key}
+		{key}: {data[key]}
+	{/each}
+</Value>
+```
+
+## ValueList
+
+Display a list of value node
+
+```svelte
+<ValueList path="post-all-summaries" let:data>
+	{#each data as item}
+		<p>
+			{#each Object.keys(item) as key}
+				{key}: {item[key]}
+			{/each}
+		</p>
+	{/each}
+</ValueList>
+```
+
 
 ## Doc
 
@@ -113,16 +144,6 @@ Display lists of documents in that collection
 ## Image
 
 Display an image from storage.
-
-## Value
-
-Get a value of node and display
-
-
-## ValueList
-
-Display a list of value node
-
 
 ## Upload
 

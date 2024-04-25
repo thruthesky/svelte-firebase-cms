@@ -1,13 +1,14 @@
 <script lang="ts">
-	import { loggedIn } from '$lib/store/user.store.svelte';
+	import { loggedIn } from '$lib/store/user.store.js';
 	import { getAuth, type Auth, type User } from 'firebase/auth';
-
-	interface $$Slots {
-		default: { user: User; auth: Auth; signOut: () => Promise<void> };
-	}
 
 	const auth = getAuth();
 
+	/**
+	 * Returns the current user.
+	 *
+	 * @why - Nullable user object is needed.
+	 */
 	function getUser(): User {
 		return auth.currentUser as User;
 	}

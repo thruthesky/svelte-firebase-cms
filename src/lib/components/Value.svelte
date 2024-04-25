@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { valueStore } from '$lib/store/value.store.js';
+	import valueStore from '$lib/store/value.store.js';
 	import { getDatabase } from 'firebase/database';
 
 	export let path: string;

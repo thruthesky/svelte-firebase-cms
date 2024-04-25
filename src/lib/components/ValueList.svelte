@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { valueListStore } from '$lib/store/value.store.js';
+	import valueListStore from '$lib/store/value-list.store.js';
 
 	import { getDatabase } from 'firebase/database';
 

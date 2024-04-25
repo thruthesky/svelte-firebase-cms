@@ -1,10 +1,8 @@
 <script lang="ts">
 	import { SvelteFirebaseCms } from '$lib/svelte-firebase-cms.js';
-	import { initializeApp } from 'firebase/app';
 
 	export let data: any;
-	const app = initializeApp(data.firebaseOptions);
-	SvelteFirebaseCms.init({ app: app });
+	SvelteFirebaseCms.init({ firebaseClientConfig: data.firebaseClientConfig });
 </script>
 
 <h1>+layout.svelte</h1>

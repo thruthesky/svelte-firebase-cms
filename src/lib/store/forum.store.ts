@@ -60,7 +60,7 @@ export function forumListStore<T = any>(
                 console.log();
                 newPosts.push({ ...child.val(), key: child.key });
             });
-            //// patch the store data
+            /// patch the store data
             update((n) => [...n, ...newPosts.reverse()]);
             hasMore = newPosts.length == limit;
         } else {

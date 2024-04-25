@@ -1,15 +1,17 @@
 <script lang="ts">
 	import { type DatabaseReference, type Database, getDatabase } from 'firebase/database';
+	import ValueList from './ValueList.svelte';
 
-	export let path: string;
-	export let hydrate: any[] = [];
-
-	const rtdb = getDatabase();
-	let store = forumListStore(rtdb, 'post-summaries-test/generated-data');
+	export let category: string;
+	export let initialData: any[] = [];
 </script>
 
-{#if $store !== undefined}
-	<slot data={$store} ref={store.ref} count={$store?.length ?? 0} {rtdb} />
-{:else}
-	<slot name="loading" />
-{/if}
+<ValueList path={'post-summaries' + '/' + category} hydrate={initialData} let:data>
+	{#each data as item}
+		<p>
+			{#each Object.keys(item) as key}
+				{key}: {item[key]}
+			{/each}
+		</p>
+	{/each}
+</ValueList>

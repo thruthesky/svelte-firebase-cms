@@ -3,15 +3,9 @@
 	import SignedIn from '$lib/components/SignedIn.svelte';
 	import Value from '$lib/components/Value.svelte';
 	import ValueList from '$lib/components/ValueList.svelte';
-
-	export let data: any = undefined;
 </script>
 
 <h1>+page.svelte</h1>
-
-<hr />
-{data.firebaseOptions}
-<hr />
 
 <SignedIn let:user let:signOut let:auth>
 	You are signed in with {user.uid}

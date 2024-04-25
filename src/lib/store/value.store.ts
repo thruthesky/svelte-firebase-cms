@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
-import { onValue, ref as dbRef } from "firebase/database";
-import type { Database } from "firebase/database";
+import { onValue, ref as dbRef, query, orderByChild, startAfter, limitToFirst } from "firebase/database";
+import type { Database, DatabaseReference, Query } from "firebase/database";
 
 /**
  * @param {Database} rtdb - Firebase Realtime Database instance.
@@ -42,12 +42,28 @@ export function valueStore<T = any>(
 export function valueListStore<T = any>(
     rtdb: Database,
     path: string,
-    hydrate: T[] = []
+    hydrate: T[] = [],
+    limit: number = 5,
+    orderBy: string = 'order',
 ) {
-    const listRef = dbRef(rtdb, path);
+    const listRef: DatabaseReference = dbRef(rtdb, path);
+
+
+
+
+
+    let q: Query = query(
+        listRef,
+        orderByChild(orderBy),
+    );
+
+    if (hydrate.length > 0) q = query(q, startAfter((hydrate[hydrate.length - 1] as any)[orderBy]));
+
+    q = query(q, limitToFirst(limit));
+
 
     const { subscribe } = writable<T[]>(hydrate, (set) => {
-        const unsubscribe = onValue(listRef, (snapshot) => {
+        const unsubscribe = onValue(q, (snapshot) => {
             const dataArr: T[] = [];
             snapshot.forEach((childSnapshot) => {
                 const childData = childSnapshot.val();

@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { loggedIn } from '$lib/store/user.store.js';
-	import { getAuth, type Auth, type User } from 'firebase/auth';
+	import { getAuth, type User } from 'firebase/auth';
 
 	const auth = getAuth();
 

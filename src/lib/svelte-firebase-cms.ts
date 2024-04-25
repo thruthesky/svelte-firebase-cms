@@ -1,15 +1,17 @@
-import type { FirebaseApp } from "firebase/app";
+import { initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { loggedIn, setLogin, setLogout } from "./store/user.store.js";
 
 
 
 interface SvelteFirebaseCmsOptions {
-    app: FirebaseApp;
+
+    firebaseClientConfig: { [key: string]: any };
 }
 
 
 export class SvelteFirebaseCms {
+    static app: FirebaseApp | null = null;
     static initialized = false;
     static options: SvelteFirebaseCmsOptions | null = null;
     static init(options: SvelteFirebaseCmsOptions) {
@@ -19,7 +21,11 @@ export class SvelteFirebaseCms {
         this.initialized = true;
 
 
-        const auth = getAuth(this.options.app);
+        console.log(options.firebaseClientConfig)
+        this.app = initializeApp(options.firebaseClientConfig);
+
+
+        const auth = getAuth(this.app);
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 // User is signed in, see docs for a list of available properties

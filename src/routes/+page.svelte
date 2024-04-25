@@ -9,7 +9,7 @@
 <SignedIn let:user let:signOut let:auth>
 	You are signed in with {user.uid}
 	<button on:click={signOut}>Sign Out</button>
-	{auth.currentUser?.email}
+	{auth.currentUser?.phoneNumber}
 </SignedIn>
 
 <NotSignedIn>

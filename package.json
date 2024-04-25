@@ -4,6 +4,7 @@
 	"version": "0.0.6",
 	"scripts": {
 		"dev": "vite dev",
+		"dev:dev4": "vite dev --open --mode dev4",
 		"build": "vite build && npm run package",
 		"preview": "vite preview",
 		"package": "svelte-kit sync && svelte-package && publint",

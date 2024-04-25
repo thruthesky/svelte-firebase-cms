@@ -1,3 +1,5 @@
+<svelte:options accessors />
+
 <script lang="ts">
 	import valueListStore from '$lib/store/value-list.store.js';
 
@@ -7,7 +9,7 @@
 	export let hydrate: any[] = [];
 
 	const rtdb = getDatabase();
-	let store = valueListStore(rtdb!, path, hydrate);
+	export let store = valueListStore(rtdb!, path, hydrate);
 </script>
 
 {#if $store !== undefined}

@@ -22,11 +22,8 @@ export default function valueListStore<T = any>(
         listRef,
         orderByChild(orderBy),
     );
-
     if (hydrate.length > 0) q = query(q, startAfter((hydrate[hydrate.length - 1] as any)[orderBy]));
-
     q = query(q, limitToFirst(limit));
-
 
     const { subscribe } = writable<T[]>(hydrate, (set) => {
         const unsubscribe = onValue(q, (snapshot) => {
@@ -44,7 +41,16 @@ export default function valueListStore<T = any>(
         return unsubscribe;
     });
 
-    function fetch() { }
+    function fetch() {
+        let q: Query = query(
+            listRef,
+            orderByChild(orderBy),
+        );
+        if (hydrate.length > 0) q = query(q, startAfter((hydrate[hydrate.length - 1] as any)[orderBy]));
+        q = query(q, limitToFirst(limit));
+
+
+    }
 
     return {
         subscribe,

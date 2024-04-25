@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { valueListStore } from '$lib/store/value.store.js';
 
-	import { type DatabaseReference, type Database, getDatabase } from 'firebase/database';
+	import { getDatabase } from 'firebase/database';
 
 	export let path: string;
 	export let hydrate: any[] = [];

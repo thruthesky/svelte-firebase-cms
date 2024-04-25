@@ -6,6 +6,7 @@ import SignedIn from './components/SignedIn.svelte';
 import NotSignedIn from './components/NotSignedIn.svelte';
 import Value from './components/Value.svelte';
 import ValueList from './components/ValueList.svelte';
+import { MapMap } from './interfaces.js';
 
 
 
@@ -15,4 +16,5 @@ export {
     NotSignedIn,
     Value,
     ValueList,
+    MapMap,
 };

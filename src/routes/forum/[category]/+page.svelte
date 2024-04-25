@@ -8,14 +8,11 @@
 
 <h1>{data.category}</h1>
 
-<InfiniteValueList path={'posts-summary/' + data.category} let:values>
-	{#each values as item}
-		<p style="padding: 3em;">
-			{#each Object.keys(item) as key}
-				{key}: {item[key]}
-			{/each}
-		</p>
-	{/each}
+<InfiniteValueList path={'posts-summary/' + data.category} let:value>
+	<p style="padding: 3em;">
+		{value['key']}, {value['title']}
+	</p>
 
-	<p slot="noData">No data</p>
+	<p slot="noMoreData">No more posts</p>
+	<p slot="loading">Loading data...</p>
 </InfiniteValueList>

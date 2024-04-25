@@ -2,11 +2,10 @@
 	import NotSignedIn from '$lib/components/NotSignedIn.svelte';
 	import SignedIn from '$lib/components/SignedIn.svelte';
 	import Value from '$lib/components/Value.svelte';
-	import ValueList from '$lib/components/ValueList.svelte';
 </script>
 
-<h1>+page.svelte</h1>
-
+<div>+page.svelte</div>
+<h1>Home page</h1>
 <SignedIn let:user let:signOut let:auth>
 	You are signed in with {user.uid}
 	<button on:click={signOut}>Sign Out</button>
@@ -35,12 +34,6 @@
 	{/each}
 </Value>
 
-<ValueList path="post-all-summaries" let:data>
-	{#each data as item}
-		<p>
-			{#each Object.keys(item) as key}
-				{key}: {item[key]}&nbsp;
-			{/each}
-		</p>
-	{/each}
-</ValueList>
+{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] as i}
+	<h1 style="padding: 3em;">{i}</h1>
+{/each}

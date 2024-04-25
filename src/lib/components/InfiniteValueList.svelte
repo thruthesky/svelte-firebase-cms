@@ -1,11 +1,10 @@
 <svelte:options accessors />
 
 <script lang="ts">
-	import { fetch, unsubscribe, values } from '$lib/store/infinite-value-list.store.js';
+	import { fetch, unsubscribe, values, noMoreData } from '$lib/store/infinite-value-list.store.js';
 
 	import { getDatabase } from 'firebase/database';
 	import { onDestroy, onMount } from 'svelte';
-	import { get } from 'svelte/store';
 
 	export let path: string;
 
@@ -28,20 +27,29 @@
 	});
 </script>
 
-{#if $values.length > 0}
-	<div style="">
-		<slot values={get(values)} />
-	</div>
+{#if $values}
+	{#each Object.keys($values) as k (k)}
+		<p style="padding: 3em;">
+			<slot value={$values[k]} />
+		</p>
+	{/each}
+
+	{Object.keys($values).length}
+
+	<hr />
+
+	{#if $noMoreData}
+		<slot name="noMoreData" />
+	{/if}
+
 	<button
 		on:click={() =>
 			fetch({
 				rtdb,
 				path,
-				limit: 5,
-				order: 'order',
-				orderValue: get(values).at(get(values).length - 1)?.order
+				limit: 5
 			})}>Fetch more</button
 	>
 {:else}
-	<slot name="noData" />
+	<slot name="loading" />
 {/if}

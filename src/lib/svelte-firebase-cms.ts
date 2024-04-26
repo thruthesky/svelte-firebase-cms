@@ -5,8 +5,7 @@ import { loggedIn, setLogin, setLogout } from "./store/user.store.js";
 
 
 interface SvelteFirebaseCmsOptions {
-
-    firebaseClientConfig: { [key: string]: any };
+    app: FirebaseApp;
 }
 
 
@@ -20,9 +19,7 @@ export class SvelteFirebaseCms {
         this.options = options;
         this.initialized = true;
 
-
-        console.log(options.firebaseClientConfig)
-        this.app = initializeApp(options.firebaseClientConfig);
+        this.app = options.app;
 
 
         const auth = getAuth(this.app);

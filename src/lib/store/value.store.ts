@@ -12,21 +12,20 @@ export default function valueStore<T = any>(
     rtdb: Database,
     path: string,
     hydrate?: T
-) {
+): T {
     const dataRef = dbRef(rtdb, path);
 
     const { subscribe } = writable<T | null>(hydrate, (set) => {
         const unsubscribe = onValue(dataRef, (snapshot) => {
             set(snapshot.val() as T);
         });
-
         return unsubscribe;
     });
 
     return {
         subscribe,
         ref: dataRef,
-    };
+    } as T;
 }
 
 

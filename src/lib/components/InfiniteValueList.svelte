@@ -54,9 +54,7 @@
 
 {#if $values}
 	{#each Object.keys($values) as k (k)}
-		<p style="padding: 3em;">
-			<slot value={$values[k]} />
-		</p>
+		<slot value={$values[k]} />
 	{/each}
 
 	{#if $noMoreData}

@@ -11,7 +11,7 @@
 </script>
 
 {#if $store !== undefined}
-	<slot data={$store} ref={store.ref} {rtdb} />
+	<slot value={$store} ref={store.ref} {rtdb} />
 {:else}
 	<slot name="loading" />
 {/if}

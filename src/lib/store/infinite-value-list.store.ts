@@ -1,3 +1,4 @@
+import type { MapMap } from "$lib/interfaces.js";
 import {
     Database,
     limitToFirst,
@@ -10,10 +11,19 @@ import {
     type Query,
     type Unsubscribe,
 } from "firebase/database";
-import { writable, type Writable } from "svelte/store";
+import { get, writable, type Writable } from "svelte/store";
 
 
-export const values: Writable<Array<{ [key: string]: any }>> = writable([]);
+// stores
+export const noMoreData: Writable<boolean> = writable(false);
+export const values: Writable<MapMap | undefined> = writable(undefined);
+
+// default order field
+const orderField = 'order';
+// last order value
+let lastOderValue: any | undefined = undefined;
+let loading = false;
+
 
 let subscriptions: Array<Unsubscribe> = [];
 
@@ -25,39 +35,65 @@ export const unsubscribe = () => {
 interface FetchOptions {
     rtdb: Database;
     path: string;
-    order?: string;
-    orderValue?: any;
     limit: number;
 }
 
+/**
+ * Resets the store. It does not fetch the first page of data. It only resets the store.
+ * @returns void
+ */
+export function reset() {
+    lastOderValue = undefined;
+    loading = false;
+    noMoreData.set(false);
+    values.set(undefined);
+    unsubscribe();
+}
+
+/**
+ * fetches data from the database
+ * @param o options
+ * @returns void
+ */
 export function fetch(o: FetchOptions) {
 
+    if (get(noMoreData)) {
+        console.log("no more data. don't fetch. just return");
+        return;
+    }
+    if (loading) {
+        console.log("In loading. don't fetch. just return");
+        return;
+    }
 
+    loading = true;
+    console.log("fetching data with: ", o.path, o.limit);
+
+    // Prepare the query
     const listRef: DatabaseReference = ref(o.rtdb, o.path);
-
-
     let q: Query = query(listRef);
-    if (o.order) q = query(listRef, orderByChild(o.order));
-    if (o.orderValue) q = query(q, startAt(o.orderValue));
+    q = query(listRef, orderByChild(orderField));
+    if (lastOderValue) q = query(q, startAt(lastOderValue));
     q = query(q, limitToFirst(o.limit));
 
-
-
+    // Subscribe to the query
     subscriptions.push(onValue(q, (snapshot) => {
 
-        const arr: any[] = [];
-
+        // Process the snapshot. Save the data to the store.
+        const data: MapMap = get(values) ?? {};
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
-            arr.push({
-                nodeKey: childSnapshot.ref.key,
-                ...(typeof childData === "object" ? childData : {}),
-            });
+            const key = childData[orderField] + '-' + childSnapshot.ref.key as string;
+            data[key] = typeof childData === "object" ? { key, ...childData } : {};
+            lastOderValue = childData[orderField];
         });
+        values.set(data);
 
-        values.update((v) => {
-            v.push(...arr);
-            return v;
-        });
+        /** 다음 페이지를 로드 하는 중에, DB 가 업데이터 되어, loading 이 false 가 될 수 있다. 이 경우 무시해도 된다. */
+        loading = false;
+
+        if (snapshot.size === 0 || snapshot.size < o.limit) {
+            noMoreData.set(true);
+        }
     }));
 }

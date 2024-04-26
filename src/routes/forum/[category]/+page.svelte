@@ -17,7 +17,12 @@
 	<a href="/forum/create/{data.category}">Create a post</a>
 </nav>
 
-<InfiniteValueList path={'posts-summary/' + data.category} let:value bind:this={controller}>
+<InfiniteValueList
+	path={'posts-summary/' + data.category}
+	hydrate={data.posts}
+	let:value
+	bind:this={controller}
+>
 	<p style="padding: 2em;">
 		<a href="/forum/{value.category}/{value.key}">{value.title}</a>
 	</p>

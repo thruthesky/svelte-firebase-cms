@@ -140,16 +140,11 @@ Display lists of documents in that collection
 
 
 
-
-## Image
-
-Display an image from storage.
-
 ## Upload
 
 display a UI for file upload into storage
 
-## MyDoc
+## MyValue
 
 ## UserDoc
 

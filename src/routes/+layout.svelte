@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { page } from '$app/stores';
 	import { SvelteFirebaseCms } from '$lib/svelte-firebase-cms.js';
+	import { getApp } from 'firebase/app';
+	import { initializeFirebaseClient } from '../init.firebase.client.js';
 
 	export let data: any;
-	SvelteFirebaseCms.init({ firebaseClientConfig: data.firebaseClientConfig });
+	const app = initializeFirebaseClient(data.firebaseClientConfig);
+	SvelteFirebaseCms.init({ app: getApp() });
 </script>
 
 <div class="app-container" class:is-chat-room={$page.url.pathname === '/chat-room'}>
@@ -13,7 +16,8 @@
 			<a href="/">Home</a> |
 			<a href="/forum">Forum</a> |
 			<a href="/chat-room-list">Chat Room List</a> |
-			<a href="/chat-room">Chat Room</a>
+			<a href="/chat-room">Chat Room</a> |
+			<a href="/user/profile">Profile</a>
 		</div>
 	</section>
 

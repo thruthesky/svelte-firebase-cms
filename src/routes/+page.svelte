@@ -20,17 +20,21 @@
 	<Value
 		path="post-all-summaries/-NvgtY78Qcowz-zwjRnN"
 		hydrate={{ title: 'THIS IS TITLE P' }}
-		let:data
+		let:value
 	>
-		{#each Object.keys(data) as key}
-			{key}: {data[key]} &nbsp;
+		{#each Object.keys(value) as key}
+			{key}: {value[key]} &nbsp;
 		{/each}
 	</Value>
 </p>
 
-<Value path="post-all-summaries/-NvgtY78Qcowz-zwjRnN" hydrate={{ title: 'THIS IS TITLE' }} let:data>
-	{#each Object.keys(data) as key}
-		{key}: {data[key]} &nbsp;
+<Value
+	path="post-all-summaries/-NvgtY78Qcowz-zwjRnN"
+	hydrate={{ title: 'THIS IS TITLE' }}
+	let:value
+>
+	{#each Object.keys(value) as key}
+		{key}: {value[key]} &nbsp;
 	{/each}
 </Value>
 

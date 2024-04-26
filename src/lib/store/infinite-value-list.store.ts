@@ -83,10 +83,13 @@ export function fetch(o: FetchOptions) {
         const data: MapMap = get(values) ?? {};
         snapshot.forEach((childSnapshot) => {
             const childData = childSnapshot.val();
-            const key = childData[orderField] + '-' + childSnapshot.ref.key as string;
-            data[key] = typeof childData === "object" ? { key, ...childData } : {};
+            const key = childSnapshot.ref.key as string;
+            // JSON has no order. So, we need to create a key that has the order value in it.
+            const orderKey = childData[orderField] + '-' + key;
+            data[orderKey] = typeof childData === "object" ? { key, ...childData } : {};
             lastOderValue = childData[orderField];
         });
+        console.log(data);
         values.set(data);
 
         /** 다음 페이지를 로드 하는 중에, DB 가 업데이터 되어, loading 이 false 가 될 수 있다. 이 경우 무시해도 된다. */

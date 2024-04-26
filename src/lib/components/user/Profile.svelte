@@ -3,7 +3,6 @@
 	import { uploadPhoto } from '$lib/functions/storage.function.js';
 	import { userGet, userUpdate, type UserInterface } from '$lib/functions/user.functions.js';
 	import { getAuth } from 'firebase/auth';
-	import { update } from 'firebase/database';
 	import { onMount } from 'svelte';
 	import Value from '../Value.svelte';
 
@@ -45,11 +44,10 @@
 
 <SignedIn let:user>
 
-	<slot></slot>
 	<slot name="profile" value={formData} onSubmit={onSubmit} formData={formData}>
-		<Value path='/users/{formData.uid}/photoUrl' let:value hydrate={formData.photoUrl}>
+		<!-- <Value path='/users/{formData.uid}/photoUrl' let:value hydrate={formData.photoUrl}>
 			<img src={value}  alt=""/>
-		</Value>
+		</Value> -->
 
 		<input type="file" accept="image/png, image/jpeg, image/jpg" on:change={onChangeFile} >
 

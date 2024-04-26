@@ -6,6 +6,7 @@ export interface UserInterface {
     displayName?: string;
     photoUrl?: string;
     stateMessage?: string;
+    lastLogin?: any;
 }
 
 

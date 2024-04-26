@@ -1,13 +1,13 @@
 <script lang="ts">
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 
 	let controller: InfiniteValueList;
 
 	onMount(() => {
-		console.log('Category post list page mounted');
+		// console.log('Category post list page mounted');
 		// controller?.onReset(); // why reset
 	});
 </script>

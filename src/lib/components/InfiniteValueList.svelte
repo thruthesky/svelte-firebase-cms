@@ -26,6 +26,7 @@
 
 	onDestroy(() => {
 		unsubscribe();
+		reset();
 		console.log('InfiniteValueList destroyed');
 	});
 

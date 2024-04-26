@@ -58,6 +58,7 @@ export function reset() {
  */
 export function fetch(o: FetchOptions) {
 
+
     if (o.hydrate) {
         values.update((obj) => ({ ...obj, ...o.hydrate }));
     }

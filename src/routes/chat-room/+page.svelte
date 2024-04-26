@@ -1,17 +1,24 @@
 <script>
 	import { page } from '$app/stores';
-	$: chatRoomId = $page.data;
+	import ChatRoomMessages from '$lib/components/chat/ChatRoomMessages.svelte';
+	$: chatRoomId = $page.url.searchParams.get('id') ?? '';
 	console.log('chat room ID: ', chatRoomId);
 </script>
 
 <section class="chat-room">
 	<header class="chat-room-header">Chat Room Header | <a href="/">[ HOME ]</a> ... [ MENU ]</header>
 
-	<div class="chat-room-messages">
+	<!-- <div class="chat-room-messages">
 		{#each [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20] as i}
 			<h1 style="padding: 3em;">{i}</h1>
 		{/each}
-	</div>
+	</div> -->
+	<ChatRoomMessages {chatRoomId} let:messageData>
+		<div>
+			<p>{messageData}</p>
+		</div>
+		<p slot="loading">Loading data...</p>
+	</ChatRoomMessages>
 
 	<nav class="chat-room-footer">
 		<input style="width: 100%;" />
@@ -32,10 +39,10 @@
 		padding: 1em;
 	}
 
-	.chat-room-messages {
+	/* .chat-room-messages {
 		flex: 1;
 		overflow-y: auto;
-	}
+	} */
 
 	.chat-room-footer {
 		display: flex;

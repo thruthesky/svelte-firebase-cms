@@ -2,9 +2,11 @@ import { getAuth } from "firebase/auth";
 import { get, getDatabase, ref, update, type DatabaseReference } from "firebase/database";
 
 export interface UserInterface {
+    uid? : string;
     displayName?: string;
     photoUrl?: string;
     stateMessage?: string;
+    lastLogin?: any;
 }
 
 

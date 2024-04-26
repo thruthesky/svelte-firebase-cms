@@ -2,13 +2,7 @@
 
 <script lang="ts">
 	import type { MapMap } from '$lib/interfaces.js';
-	import {
-		fetch,
-		unsubscribe,
-		values,
-		noMoreData,
-		reset
-	} from '$lib/store/infinite-value-list.store.js';
+	import { fetch, values, noMoreData, reset } from '$lib/store/infinite-value-list.store.js';
 
 	import { getDatabase } from 'firebase/database';
 	import { onDestroy, onMount } from 'svelte';
@@ -25,7 +19,6 @@
 	});
 
 	onDestroy(() => {
-		unsubscribe();
 		reset();
 		console.log('InfiniteValueList destroyed');
 	});

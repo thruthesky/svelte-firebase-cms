@@ -1,14 +1,22 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
 	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 
 	let controller: InfiniteValueList;
+	let unsubscribe: () => void;
 
 	onMount(() => {
-		// console.log('Category post list page mounted');
-		// controller?.onReset(); // why reset
+		/// When categry changes, reset the store and fetch new data
+		unsubscribe = page.subscribe(() => {
+			controller?.onReset();
+		});
+	});
+
+	onDestroy(() => {
+		unsubscribe?.();
 	});
 </script>
 
@@ -18,7 +26,7 @@
 </nav>
 
 <InfiniteValueList
-	path={'posts-summary/' + data.category}
+	path={'post-summaries/' + data.category}
 	hydrate={data.posts}
 	let:value
 	bind:this={controller}

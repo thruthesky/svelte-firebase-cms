@@ -191,3 +191,56 @@ To publish your library to [npm](https://www.npmjs.com):
 ```bash
 npm publish
 ```
+
+
+
+## Forum List
+
+- The `InfiniteValueList` component will not be `destroyed` and `mounted` if it is used in same page with different path. So, observe the chagnes of path and reset it.
+
+
+```svelte
+<script lang="ts">
+	import { page } from '$app/stores';
+	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
+	import { onMount } from 'svelte';
+
+	export let data;
+
+	let controller: InfiniteValueList;
+	let unsubscribe: () => void;
+
+	onMount(() => {
+		/// When categry changes, reset the store and fetch new data
+		unsubscribe = page.subscribe(() => {
+			controller?.onReset();
+		});
+	});
+
+	onDestroy(() => {
+		unsubscribe?.();
+	});
+</script>
+
+<InfiniteValueList
+	path={'posts-summary/' + data.category}
+	hydrate={data.posts}
+	let:value
+	bind:this={controller}
+>
+	<p style="padding: 2em;">
+		<a href="/forum/{data.category}/{value.key}">{value.title}</a>
+		<span style="display: block;"></span>{value.key}
+		<span style="display: block; margin-top:1em"
+			>{new Date(value['createdAt']).toLocaleString()}</span
+		>
+	</p>
+
+	<p slot="noMoreData" let:length>
+		# No of post loaded: #{length}
+		<br />
+		No more posts
+	</p>
+	<p slot="loading">Loading data...</p>
+</InfiniteValueList>
+```

@@ -42,8 +42,6 @@ export async function postCreate(o: PostInterface) {
 
     const newRef = await push(postsRef)
     await update(newRef, o);
-    const postsSummaryRef: DatabaseReference = ref(rtdb, `posts-summary/${o.category}/${newRef.key}`);
-    await update(postsSummaryRef, o);
 
     const snapshot = await get(newRef);
     console.log(snapshot.val());
@@ -52,14 +50,15 @@ export async function postCreate(o: PostInterface) {
 
 export async function postList(o: PostListOption): Promise<MapMap> {
 
-    initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
     o.limit = o.limit ?? 10;
     o.orderField = o.orderField ?? 'order';
     const rtdb: Database = getDatabase();
 
     const rtdbRef = ref(rtdb, o.path);
 
+
     let q: Query = query(rtdbRef, orderByChild(o.orderField), limitToFirst(10));
+    console.log(q.ref.parent?.parent?.key, q.ref.parent?.key, q.ref.key);
     const snapshots: DataSnapshot = await get(q);
 
     // let posts: Array<Map> = [];

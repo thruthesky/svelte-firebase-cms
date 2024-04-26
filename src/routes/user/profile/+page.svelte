@@ -1,6 +1,5 @@
 <script lang="ts">
 	import SignedIn from '$lib/components/SignedIn.svelte';
-	import Value from '$lib/components/Value.svelte';
 	import { userGet, userUpdate, type UserInterface } from '$lib/functions/user.functions.js';
 	import { getAuth } from 'firebase/auth';
 	import { onMount } from 'svelte';

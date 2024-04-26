@@ -36,6 +36,7 @@ interface FetchOptions {
     rtdb: Database;
     path: string;
     limit: number;
+    hydrate?: MapMap;
 }
 
 /**
@@ -56,6 +57,11 @@ export function reset() {
  * @returns void
  */
 export function fetch(o: FetchOptions) {
+
+
+    if (o.hydrate) {
+        values.update((obj) => ({ ...obj, ...o.hydrate }));
+    }
 
     if (get(noMoreData)) {
         console.log("no more data. don't fetch. just return");

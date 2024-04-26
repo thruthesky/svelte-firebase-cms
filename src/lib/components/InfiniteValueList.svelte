@@ -1,6 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
+	import type { MapMap } from '$lib/interfaces.js';
 	import {
 		fetch,
 		unsubscribe,
@@ -12,11 +13,12 @@
 	import { getDatabase } from 'firebase/database';
 	import { onDestroy, onMount } from 'svelte';
 
+	export let hydrate: MapMap = {};
 	export let path: string;
 
 	const rtdb = getDatabase();
 
-	fetch({ rtdb, path, limit: 5 });
+	fetch({ rtdb, path, limit: 5, hydrate });
 
 	onMount(() => {
 		console.log('InfiniteValueList mounted');

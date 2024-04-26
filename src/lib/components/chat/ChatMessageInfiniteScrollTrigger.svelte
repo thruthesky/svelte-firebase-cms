@@ -35,11 +35,12 @@
 <script lang="ts">
 	import { onDestroy, createEventDispatcher, onMount } from 'svelte';
 
-	export let horizontal = false;
 	export let hasMore = true;
 	export let elementScroll: HTMLElement | null = null;
 	export let usePageScroll: boolean = false;
 	export let elementId: string | null = null;
+	// TODO: Reminder the offset should not be bigger than the element's total scrollable Height or height.
+	export let threshhold: number = 100;
 
 	const dispatch = createEventDispatcher();
 	let elementScrollListener: HTMLElement | null;
@@ -48,15 +49,24 @@
 	const onScroll = (e: Event) => {
 		const target = e.target as HTMLElement;
 
-		const offset = horizontal
-			? target.scrollWidth - target.clientWidth - target.scrollLeft
-			: target.scrollHeight - target.clientHeight - target.scrollTop;
+		// measurement of the distance from the element's bottom's visible top to its topmost visible content
+		const bottom = target.scrollHeight - target.clientHeight - target.scrollTop;
 
-		console.log(offset);
-		if (offset <= 0) {
-			if (hasMore) {
-				dispatch('loadMore');
-			}
+		// measurement of the distance from the element's top to its topmost visible content
+		const top = target.scrollTop;
+
+		// Do something when the user scrolls to the top of the page
+		if (top <= threshhold) {
+			console.log('--> (hit) reached at top;', top);
+			if (hasMore) dispatch('topReach');
+		}
+
+		// Load more data when the user scrolls to the bottom of the page
+		// Retain this code until we finalize if we don't really need it. (helpful in debugging)
+		if (bottom <= threshhold) {
+			console.log('--> (hit) reached at bottom;', bottom);
+			// fetch({ rtdb, path, limit: 5 });
+			if (hasMore) dispatch('bottomReach');
 		}
 	};
 
@@ -70,7 +80,6 @@
 		} else {
 			elementScrollListener = component.parentNode as HTMLElement;
 		}
-
 		if (elementScrollListener) {
 			elementScrollListener.addEventListener('scroll', onScroll);
 		}

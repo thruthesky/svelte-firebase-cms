@@ -8,7 +8,7 @@
 
 	onMount(() => {
 		console.log('Category post list page mounted');
-		controller?.onReset();
+		// controller?.onReset(); // why reset
 	});
 </script>
 
@@ -25,6 +25,7 @@
 >
 	<p style="padding: 2em;">
 		<a href="/forum/{value.category}/{value.key}">{value.title}</a>
+		{value.key}
 	</p>
 
 	<p slot="noMoreData" let:length>

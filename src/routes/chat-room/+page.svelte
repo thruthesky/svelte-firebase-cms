@@ -1,7 +1,7 @@
 <script>
 	import { page } from '$app/stores';
 	import ChatRoomMessages from '$lib/components/chat/ChatRoomMessages.svelte';
-	$: chatRoomId = $page.data;
+	$: chatRoomId = $page.url.searchParams.get('id') ?? '';
 	console.log('chat room ID: ', chatRoomId);
 </script>
 
@@ -13,7 +13,7 @@
 			<h1 style="padding: 3em;">{i}</h1>
 		{/each}
 	</div> -->
-	<ChatRoomMessages chatRoomId="est" let:messageData>
+	<ChatRoomMessages {chatRoomId} let:messageData>
 		<div>
 			<p>{messageData}</p>
 		</div>

@@ -1,12 +1,10 @@
 <script lang="ts">
+	import ChatRoomCreateButton from '$lib/components/chat/ChatRoomCreateButton.svelte';
 	import ChatRoomList from '$lib/components/chat/ChatRoomList.svelte';
-	import { getAuth } from 'firebase/auth';
-
-	const auth = getAuth();
 </script>
 
-<h1>Chat Room Test</h1>
+<h1>Chat Room List</h1>
 
-<p>UID: {auth.currentUser?.uid}</p>
+<ChatRoomCreateButton />
 
 <ChatRoomList />

@@ -1,10 +1,7 @@
 <script lang="ts">
-	import { getAuth } from 'firebase/auth';
 	import NotSignedIn from '../NotSignedIn.svelte';
 	import SignedIn from '../SignedIn.svelte';
 	import ValueList from '../ValueList.svelte';
-
-	const auth = getAuth();
 </script>
 
 <NotSignedIn>Not Signed In</NotSignedIn>

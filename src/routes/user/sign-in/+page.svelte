@@ -16,7 +16,7 @@
 				console.log(response);
 				// reCAPTCHA solved, allow signInWithPhoneNumber.
 				//
-				signInWithPhoneNumber(auth, '+821011111111', recaptchaVerifier)
+				signInWithPhoneNumber(auth, import.meta.env.MODE == "dev" ? '+1 1111111111' : '+821011111111', recaptchaVerifier)
 					.then((confirmationResult) => {
 						// By here, phone number has verified and SMS code sent to the phone number.
 						// Prompt user to type the code from the message, then sign the

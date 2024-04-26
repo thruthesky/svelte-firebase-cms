@@ -10,6 +10,7 @@
 <a href="/forum">Forum</a>
 <a href="/">Home</a>
 <a href="/chat-room-list">Chat Room List</a>
-<a href="/chat-room">Chat Room</a>
+<a href="/chat-room">Chat Room</a> 
+<a href="/user/profile">Profile</a>
 <hr />
 <slot />

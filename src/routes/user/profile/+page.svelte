@@ -32,13 +32,13 @@
 
 	<form on:submit|preventDefault={onSubmit}>
 		<p>
-			<label>Display Name</label>
-			<input type="text" bind:value={formData.displayName} />
+			<label for="displayName">Display Name</label>
+			<input id="displayName" type="text" bind:value={formData.displayName} />
 		</p>
 
 		<p>
-			<label>State message</label>
-			<input type="text" bind:value={formData.stateMessage} />
+			<label for="stateMessage">State message</label>
+			<input id="stateMessage" type="text" bind:value={formData.stateMessage} />
 		</p>
 
 		<button> Save </button>

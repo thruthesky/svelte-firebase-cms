@@ -2,6 +2,8 @@
 	import { RecaptchaVerifier, getAuth, signInWithPhoneNumber } from 'firebase/auth';
 	import { onMount } from 'svelte';
 
+	let phoneNumber: string = '+11111111111';
+
 	onMount(() => {
 		const auth = getAuth();
 		// auth.languageCode = 'ko';
@@ -15,14 +17,13 @@
 			callback: (response: any) => {
 				console.log(response);
 				// reCAPTCHA solved, allow signInWithPhoneNumber.
-				//
-				signInWithPhoneNumber(auth, '+821011111111', recaptchaVerifier)
+				signInWithPhoneNumber(auth, phoneNumber, recaptchaVerifier)
 					.then((confirmationResult) => {
 						// By here, phone number has verified and SMS code sent to the phone number.
 						// Prompt user to type the code from the message, then sign the
 						// user in with confirmationResult.confirm(code).
 						const code = window.prompt('Enter the code sent to your phone:');
-
+						console.log(code);
 						confirmationResult
 							.confirm(code as string)
 							.then((result) => {
@@ -59,5 +60,5 @@
 
 Signin
 
-<input />
+<input bind:value={phoneNumber} />
 <button id="sign-in-button">Verify Phone Number</button>

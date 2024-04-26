@@ -1,20 +1,20 @@
 <script lang="ts">
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 
 	let controller: InfiniteValueList;
 
 	onMount(() => {
-		console.log('Category post list page mounted');
-		controller?.onReset();
+		// console.log('Category post list page mounted');
+		// controller?.onReset(); // why reset
 	});
 </script>
 
 <nav style="display: flex;">
 	<h1>{data.category}</h1>
-	<a href="/forum/create/{data.category}">Create a post</a>
+	<a href="/forum/{data.category}/create">Create a post</a>
 </nav>
 
 <InfiniteValueList
@@ -24,7 +24,11 @@
 	bind:this={controller}
 >
 	<p style="padding: 2em;">
-		<a href="/forum/{value.category}/{value.key}">{value.title}</a>
+		<a href="/forum/{data.category}/{value.key}">{value.title}</a>
+		<span style="display: block;"></span>{value.key}
+		<span style="display: block; margin-top:1em"
+			>{new Date(value['createdAt']).toLocaleString()}</span
+		>
 	</p>
 
 	<p slot="noMoreData" let:length>

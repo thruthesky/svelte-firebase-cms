@@ -1,6 +1,7 @@
 import { initializeApp, type FirebaseApp } from "firebase/app";
 import { getAuth, onAuthStateChanged } from 'firebase/auth'
 import { loggedIn, setLogin, setLogout } from "./store/user.store.js";
+import type { UserInterface } from "./functions/user.functions.js";
 
 
 
@@ -29,7 +30,7 @@ export class SvelteFirebaseCms {
                 // https://firebase.google.com/docs/reference/js/auth.user
                 // const uid = user.uid;
                 setLogin();
-                console.log('--> login user', user);
+                // console.log('--> login user', user);
                 // ...
             } else {
                 // User is signed out
@@ -37,7 +38,7 @@ export class SvelteFirebaseCms {
                 setLogout();
             }
 
-            console.log('user sign in status:', loggedIn);
+            // console.log('user sign in status:', loggedIn, user);
         });
 
 

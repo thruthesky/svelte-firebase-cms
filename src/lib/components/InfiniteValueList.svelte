@@ -18,7 +18,7 @@
 
 	const rtdb = getDatabase();
 
-	fetch({ rtdb, path, limit: 5, hydrate });
+	fetch({ rtdb, path, limit: 10, hydrate });
 
 	onMount(() => {
 		console.log('InfiniteValueList mounted');
@@ -26,12 +26,13 @@
 
 	onDestroy(() => {
 		unsubscribe();
+		reset();
 		console.log('InfiniteValueList destroyed');
 	});
 
 	export function onReset() {
 		reset();
-		fetch({ rtdb, path, limit: 5 });
+		fetch({ rtdb, path, limit: 10 });
 	}
 
 	function onScroll(e: Event) {

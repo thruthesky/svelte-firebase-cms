@@ -3,9 +3,9 @@
 	import Value from '$lib/components/Value.svelte';
 
 	export let data;
-</script>
 
-post view screen.
+	console.log('data----', data);
+</script>
 
 <section class="post-view">
 	{$page.params.category}/{$page.params.id}

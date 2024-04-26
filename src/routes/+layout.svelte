@@ -119,12 +119,6 @@
 	.is-chat-room main {
 		padding: 0;
 	}
-	.is-chat-room .sidebar-left {
-		display: none;
-	}
-	.is-chat-room .sidebar-right {
-		display: none;
-	}
 
 	@media (max-width: 768px) {
 		.sidebar-left {

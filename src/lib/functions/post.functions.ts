@@ -20,6 +20,36 @@ export interface PostInterface {
     uid?: string;
 }
 
+
+export async function postGet(path: string) {
+    const rtdb = getDatabase();
+    const postsRef: DatabaseReference = ref(rtdb, path);
+    const snapshot = await get(postsRef);
+    return snapshot.val();
+}
+
+export async function postCreate(o: PostInterface) {
+
+    const rtdb = getDatabase();
+    const postsRef: DatabaseReference = ref(rtdb, `posts/${o.category}/`);
+    const auth = getAuth();
+    const uid = auth.currentUser!.uid;
+    const now = Date.now();
+
+    o.createdAt = now;
+    o.order = now * -1;
+    o.uid = uid;
+
+    const newRef = await push(postsRef)
+    await update(newRef, o);
+    const postsSummaryRef: DatabaseReference = ref(rtdb, `posts-summary/${o.category}/${newRef.key}`);
+    await update(postsSummaryRef, o);
+
+    const snapshot = await get(newRef);
+    console.log(snapshot.val());
+    return snapshot.val();
+}
+
 export async function postList(o: PostListOption): Promise<MapMap> {
 
     initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
@@ -50,24 +80,3 @@ export async function postList(o: PostListOption): Promise<MapMap> {
 }
 
 
-export async function postCreate(o: PostInterface) {
-
-    const rtdb = getDatabase();
-    const postsRef: DatabaseReference = ref(rtdb, `posts/${o.category}/`);
-    const auth = getAuth();
-    const uid = auth.currentUser!.uid;
-    const now = Date.now();
-
-    o.createdAt = now;
-    o.order = now * -1;
-    o.uid = uid;
-
-    const newRef = await push(postsRef)
-    await update(newRef, o);
-    const postsSummaryRef: DatabaseReference = ref(rtdb, `posts-summary/${o.category}/${newRef.key}`);
-    await update(postsSummaryRef, o);
-
-    const snapshot = await get(newRef);
-    console.log(snapshot.val());
-    return snapshot.val();
-}

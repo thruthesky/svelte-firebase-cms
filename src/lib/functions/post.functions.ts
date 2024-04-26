@@ -15,7 +15,6 @@ export async function postList(o: PostListOption): Promise<MapMap> {
     o.limit = o.limit ?? 10;
     o.orderField = o.orderField ?? 'order';
 
-    initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
     const rtdb: Database = getDatabase();
 
     const rtdbRef = ref(rtdb, o.path);

@@ -58,7 +58,6 @@ export function reset() {
  */
 export function fetch(o: FetchOptions) {
 
-    console.log('o.hydrate', o.hydrate)
     if (o.hydrate) {
         values.update((obj) => ({ ...obj, ...o.hydrate }));
     }
@@ -73,7 +72,6 @@ export function fetch(o: FetchOptions) {
     }
 
     loading = true;
-    console.log("fetching data with: ", o.path, o.limit);
 
     // Prepare the query
     const listRef: DatabaseReference = ref(o.rtdb, o.path);
@@ -95,7 +93,6 @@ export function fetch(o: FetchOptions) {
             data[orderKey] = typeof childData === "object" ? { key, ...childData } : {};
             lastOderValue = childData[orderField];
         });
-        console.log("fetch:data:", data);
         values.set(data);
 
         /** 다음 페이지를 로드 하는 중에, DB 가 업데이터 되어, loading 이 false 가 될 수 있다. 이 경우 무시해도 된다. */

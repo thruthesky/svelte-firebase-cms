@@ -14,7 +14,7 @@
 
 <nav style="display: flex;">
 	<h1>{data.category}</h1>
-	<a href="/forum/create/{data.category}">Create a post</a>
+	<a href="/forum/{data.category}/create">Create a post</a>
 </nav>
 
 <InfiniteValueList
@@ -24,8 +24,11 @@
 	bind:this={controller}
 >
 	<p style="padding: 2em;">
-		<a href="/forum/{value.category}/{value.key}">{value.title}</a>
-		{value.key}
+		<a href="/forum/{data.category}/{value.key}">{value.title}</a>
+		<span style="display: block;"></span>{value.key}
+		<span style="display: block; margin-top:1em"
+			>{new Date(value['createdAt']).toLocaleString()}</span
+		>
 	</p>
 
 	<p slot="noMoreData" let:length>

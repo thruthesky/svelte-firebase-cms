@@ -12,14 +12,15 @@ interface PostListOption {
 
 export async function postList(o: PostListOption): Promise<MapMap> {
 
-    initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
-    const rtdb: Database = getDatabase();
-
     o.limit = o.limit ?? 10;
     o.orderField = o.orderField ?? 'order';
 
+    initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
+    const rtdb: Database = getDatabase();
 
-    let q: Query = query(ref(rtdb, o.path), orderByChild('order'), limitToFirst(10));
+    const rtdbRef = ref(rtdb, o.path);
+
+    let q: Query = query(rtdbRef, orderByChild(o.orderField), limitToFirst(10));
     const snapshots: DataSnapshot = await get(q);
 
     // let posts: Array<Map> = [];
@@ -36,8 +37,5 @@ export async function postList(o: PostListOption): Promise<MapMap> {
     } else {
         console.log('No data available at ' + o.path);
     }
-
-    console.log('postList:posts:', posts)
-
     return posts;
 }

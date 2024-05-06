@@ -72,7 +72,7 @@ export async function postList(o: PostListOption): Promise<MapMap> {
 
 
     let q: Query = query(rtdbRef, orderByChild(o.orderField), limitToFirst(10));
-    console.log(q.ref.parent?.parent?.key, q.ref.parent?.key, q.ref.key);
+    console.log('---->postList', q.ref.parent?.parent?.key, q.ref.parent?.key, q.ref.key);
     const snapshots: DataSnapshot = await get(q);
 
     // let posts: Array<Map> = [];

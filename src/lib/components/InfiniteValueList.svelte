@@ -10,6 +10,7 @@
 
 	export let hydrate: MapMap = {};
 	export let path: string;
+	export let autoFetch: boolean = true;
 
 	let unsubscribe: () => void;
 
@@ -40,6 +41,7 @@
 	}
 
 	function onScroll(e: Event) {
+		if (autoFetch == false) return;
 		const el = document.documentElement;
 		const bottom = el.scrollHeight - el.clientHeight - el.scrollTop;
 		const top = el.scrollTop;
@@ -67,6 +69,8 @@
 	{#if $noMoreData}
 		<!-- Display this slot when there is no more data to load -->
 		<slot name="noMoreData" length={Object.keys($values).length} />
+	{:else}
+		<a href="/forum/qna?startAfter=id">[Load More]</a>
 	{/if}
 {:else}
 	<!-- Display this slot when data is loading -->

@@ -1,6 +1,7 @@
 <svelte:options accessors />
 
 <script lang="ts">
+	import { page } from '$app/stores';
 	import type { MapMap } from '$lib/interfaces.js';
 	import { fetch, values, noMoreData, reset } from '$lib/store/infinite-value-list.store.js';
 
@@ -10,17 +11,27 @@
 	export let hydrate: MapMap = {};
 	export let path: string;
 
+	let unsubscribe: () => void;
+
 	const rtdb = getDatabase();
 
 	fetch({ rtdb, path, limit: 10, hydrate });
 
 	onMount(() => {
 		console.log('InfiniteValueList mounted');
+
+		/// When categry changes, reset the store and fetch new data
+		unsubscribe = page.subscribe(() => {
+			console.log('pageChange:Reset:InfiniteValueList');
+			onReset();
+		});
 	});
 
 	onDestroy(() => {
-		reset();
 		console.log('InfiniteValueList destroyed');
+		reset();
+
+		unsubscribe?.();
 	});
 
 	export function onReset() {

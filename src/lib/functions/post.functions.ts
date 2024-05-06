@@ -18,14 +18,15 @@ export interface PostInterface {
     createdAt?: number;
     order?: number;
     uid?: string;
+    key?: string;
 }
 
 
 export async function postGet(path: string) {
     const rtdb = getDatabase();
-    const postsRef: DatabaseReference = ref(rtdb, path);
+    const postsRef: DatabaseReference = ref(rtdb, `posts/${path}`);
     const snapshot = await get(postsRef);
-    return snapshot.val();
+    return { ...snapshot.val(), key: snapshot.key };
 }
 
 export async function postCreate(o: PostInterface) {
@@ -44,8 +45,21 @@ export async function postCreate(o: PostInterface) {
     await update(newRef, o);
 
     const snapshot = await get(newRef);
-    console.log(snapshot.val());
-    return snapshot.val();
+    return { ...snapshot.val(), key: snapshot.key };
+}
+
+export async function postUpdate(o: PostInterface) {
+
+    const rtdb = getDatabase();
+    const postsRef: DatabaseReference = ref(rtdb, `posts/${o.category}/${o.key}`);
+
+    await update(postsRef, {
+        'title': o.title,
+        'content': o.content
+    });
+
+    const snapshot = await get(postsRef);
+    return { ...snapshot.val(), key: snapshot.key };
 }
 
 export async function postList(o: PostListOption): Promise<MapMap> {

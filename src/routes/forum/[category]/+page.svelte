@@ -1,23 +1,24 @@
 <script lang="ts">
-	import { page } from '$app/stores';
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
-	import { onDestroy, onMount } from 'svelte';
+
+	// import { page } from '$app/stores';
+	// import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 
-	let controller: InfiniteValueList;
-	let unsubscribe: () => void;
+	// let controller: InfiniteValueList;
+	// let unsubscribe: () => void;
 
-	onMount(() => {
-		/// When categry changes, reset the store and fetch new data
-		unsubscribe = page.subscribe(() => {
-			controller?.onReset();
-		});
-	});
+	// onMount(() => {
+	// 	// /// When categry changes, reset the store and fetch new data
+	// 	// unsubscribe = page.subscribe(() => {
+	// 	// 	controller?.onReset();
+	// 	// });
+	// });
 
-	onDestroy(() => {
-		unsubscribe?.();
-	});
+	// onDestroy(() => {
+	// 	// unsubscribe?.();
+	// });
 </script>
 
 <nav style="display: flex;">
@@ -25,12 +26,14 @@
 	<a href="/forum/{data.category}/create">Create a post</a>
 </nav>
 
-<InfiniteValueList
+<!-- <InfiniteValueList
 	path={'post-summaries/' + data.category}
 	hydrate={data.posts}
 	let:value
 	bind:this={controller}
->
+> -->
+
+<InfiniteValueList path={'post-summaries/' + data.category} hydrate={data.posts} let:value>
 	<p style="padding: 2em;">
 		<a href="/forum/{data.category}/{value.key}">{value.title}</a>
 		<span style="display: block;"></span>{value.key}

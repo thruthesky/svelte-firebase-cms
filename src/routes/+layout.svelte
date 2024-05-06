@@ -14,10 +14,9 @@
 		<div style="display: flex;">
 			<h1>App Header</h1>
 			<a href="/">Home</a> |
+			<a href="/user/sign-in">Sign In</a> |
 			<a href="/forum">Forum</a> (<a href="/forum/discussion">Disucssion</a>
 			<a href="/forum/qna">QnA</a>) |
-			<a href="/chat-room-list">Chat Room List</a> |
-			<a href="/chat-room">Chat Room</a> |
 			<a href="/user/profile">Profile</a>|
 			<a href="/user/list">User List</a>
 		</div>

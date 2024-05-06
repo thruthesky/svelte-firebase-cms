@@ -2,6 +2,9 @@
 
 Svelte library for FireFlutter
 
+## Run
+
+- To run with `.env.dev`, run `npm run dev -- --open --mode dev`.
 
 
 ## Initialization

@@ -36,6 +36,9 @@
 <InfiniteValueList path={'post-summaries/' + data.category} hydrate={data.posts} let:value>
 	<p style="padding: 2em;">
 		<a href="/forum/{data.category}/{value.key}">{value.title}</a>
+		<span>
+			{value.content}
+		</span>
 		<span style="display: block;"></span>{value.key}
 		<span style="display: block; margin-top:1em"
 			>{new Date(value['createdAt']).toLocaleString()}</span

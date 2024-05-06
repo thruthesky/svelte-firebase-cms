@@ -18,14 +18,15 @@ export interface PostInterface {
     createdAt?: number;
     order?: number;
     uid?: string;
+    key?: string;
 }
 
 
 export async function postGet(path: string) {
     const rtdb = getDatabase();
-    const postsRef: DatabaseReference = ref(rtdb, path);
+    const postsRef: DatabaseReference = ref(rtdb, `posts/${path}`);
     const snapshot = await get(postsRef);
-    return snapshot.val();
+    return { ...snapshot.val(), key: snapshot.key };
 }
 
 export async function postCreate(o: PostInterface) {
@@ -44,8 +45,21 @@ export async function postCreate(o: PostInterface) {
     await update(newRef, o);
 
     const snapshot = await get(newRef);
-    console.log(snapshot.val());
-    return snapshot.val();
+    return { ...snapshot.val(), key: snapshot.key };
+}
+
+export async function postUpdate(o: PostInterface) {
+
+    const rtdb = getDatabase();
+    const postsRef: DatabaseReference = ref(rtdb, `posts/${o.category}/${o.key}`);
+
+    await update(postsRef, {
+        'title': o.title,
+        'content': o.content
+    });
+
+    const snapshot = await get(postsRef);
+    return { ...snapshot.val(), key: snapshot.key };
 }
 
 export async function postList(o: PostListOption): Promise<MapMap> {
@@ -58,7 +72,7 @@ export async function postList(o: PostListOption): Promise<MapMap> {
 
 
     let q: Query = query(rtdbRef, orderByChild(o.orderField), limitToFirst(10));
-    console.log(q.ref.parent?.parent?.key, q.ref.parent?.key, q.ref.key);
+    console.log('---->postList', q.ref.parent?.parent?.key, q.ref.parent?.key, q.ref.key);
     const snapshots: DataSnapshot = await get(q);
 
     // let posts: Array<Map> = [];

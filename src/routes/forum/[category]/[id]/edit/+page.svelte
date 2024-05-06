@@ -6,6 +6,8 @@
 
 	let formData: PostInterface;
 
+	console.log('edit::');
+
 	onMount(async () => {
 		formData = await postGet(`${$page.params.category}/${$page.params.id}`);
 	});

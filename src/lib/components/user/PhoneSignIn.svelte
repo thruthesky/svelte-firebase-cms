@@ -1,9 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { userUpdate } from '$lib/functions/user.functions.js';
+	import { userGet, userUpdate } from '$lib/functions/user.functions.js';
 	import { RecaptchaVerifier, getAuth, signInWithPhoneNumber, type ConfirmationResult } from 'firebase/auth';
 	import { serverTimestamp } from 'firebase/database';
 	import { onMount } from 'svelte';
+
+
+	export let redirectPath: string = '/';
+	export let newUserRedirectPath: string = '/user/profile';
 
 
     let inputPhoneNumber : string;
@@ -106,14 +110,26 @@
 		const smsCode = getSmsCode(inputSmsCode)
         globalConfirmationResult
 			.confirm(smsCode)
-			.then((result: any) => {
+			.then(async (result: any) => {
 				// User signed in successfully.
 				successMessage = 'Login successfully';
 				alert(successMessage + " "+result.user.uid);
-				userUpdate({
+
+				const user = await userGet(result.user.uid);
+				if(user.createdAt !=  null && user.createdAt != undefined){
+					userUpdate({
 						lastLogin : serverTimestamp(),
 					});
-				goto('/')
+
+				}else{
+					userUpdate({
+						lastLogin : serverTimestamp(),
+						createdAt : serverTimestamp(),
+					});
+
+
+				}
+				goto(redirectPath);
 				})
 			.catch((error: any ) => {
 				// User couldn't sign in (bad verification code?)

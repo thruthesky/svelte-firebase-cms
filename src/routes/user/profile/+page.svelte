@@ -4,7 +4,11 @@
 	import Profile from '$lib/components/user/Profile.svelte';
 
 	let profile:any;
-let formData: UserInterface;
+let formData: UserInterface = {
+	displayName: '',
+    stateMessage: '',
+    photoUrl: '',
+};
 
 </script>
 

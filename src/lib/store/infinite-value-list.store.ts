@@ -37,6 +37,7 @@ interface FetchOptions {
     path: string;
     limit: number;
     hydrate?: MapMap;
+    orderField?: string;
 }
 
 /**
@@ -77,7 +78,7 @@ export function fetch(o: FetchOptions) {
     // Prepare the query
     const listRef: DatabaseReference = ref(o.rtdb, o.path);
     let q: Query = query(listRef);
-    q = query(listRef, orderByChild(orderField));
+    q = query(listRef, orderByChild(o.orderField!));
     if (lastOderValue) q = query(q, startAt(lastOderValue));
     q = query(q, limitToFirst(o.limit));
 
@@ -90,9 +91,9 @@ export function fetch(o: FetchOptions) {
             const childData = childSnapshot.val();
             const key = childSnapshot.ref.key as string;
             // JSON has no order. So, we need to create a key that has the order value in it.
-            const orderKey = childData[orderField] + '-' + key;
+            const orderKey = childData[o.orderField!] + '-' + key;
             data[orderKey] = typeof childData === "object" ? { key, ...childData } : {};
-            lastOderValue = childData[orderField];
+            lastOderValue = childData[o.orderField!];
         });
         values.set(data);
 

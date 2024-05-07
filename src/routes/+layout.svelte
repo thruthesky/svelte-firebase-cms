@@ -9,15 +9,14 @@
 	SvelteFirebaseCms.init({ app: getApp() });
 </script>
 
-<div class="app-container" class:is-chat-room={$page.url.pathname === '/chat-room'}>
+<div class="app-container">
 	<section class="app-header">
 		<div style="display: flex;">
 			<h1>App Header</h1>
 			<a href="/">Home</a> |
+			<a href="/user/sign-in">Sign In</a> |
 			<a href="/forum">Forum</a> (<a href="/forum/discussion">Disucssion</a>
 			<a href="/forum/qna">QnA</a>) |
-			<a href="/chat-room-list">Chat Room List</a> |
-			<a href="/chat-room">Chat Room</a> |
 			<a href="/user/profile">Profile</a>|
 			<a href="/user/list">User List</a>
 		</div>
@@ -27,8 +26,7 @@
 		<aside class="sidebar-left">
 			<h2>App Sidebar</h2>
 			<a href="/forum">Forum</a>
-			<a href="/chat-room-list">Chat Room List</a>
-			<a href="/chat-room">Chat Room</a>
+
 			<hr />
 		</aside>
 		<main>
@@ -37,8 +35,7 @@
 		<aside class="sidebar-right">
 			<h2>App Sidebar</h2>
 			<a href="/forum">Forum</a>
-			<a href="/chat-room-list">Chat Room List</a>
-			<a href="/chat-room">Chat Room</a>
+
 			<hr />
 		</aside>
 	</div>
@@ -47,8 +44,7 @@
 		<h2>App Footer</h2>
 		<a href="/">Home</a>
 		<a href="/forum">Forum</a>
-		<a href="/chat-room-list">Chat Room List</a>
-		<a href="/chat-room">Chat Room</a>
+
 		<hr />
 	</section>
 </div>
@@ -106,20 +102,6 @@
 		padding: var(--gap);
 		overflow-y: hidden;
 		background-color: rgb(228, 251, 236);
-	}
-
-	.is-chat-room .app-header {
-		display: none;
-	}
-	.is-chat-room .app-footer {
-		display: none;
-	}
-	.is-chat-room .app-content {
-		margin-top: 0;
-	}
-
-	.is-chat-room main {
-		padding: 0;
 	}
 
 	@media (max-width: 768px) {

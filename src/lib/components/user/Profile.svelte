@@ -9,9 +9,7 @@
 	export let formData: UserInterface = {
 		displayName: '',
         stateMessage: '',
-        photoUrl: '',
-		name:'',
-		gender:''
+        photoUrl:'',
 	};
 
 
@@ -24,6 +22,7 @@
 	});
 
 	// you can upload a phone on storage and then update the photoUrl
+
  export function onChangeFile(event: any) {
 		uploadPhoto(event, formData.uid, {
 			deleteUrl: formData.photoUrl,
@@ -41,12 +40,9 @@ export function onSubmit() {
 		userUpdate({
 			displayName: formData.displayName,
 			stateMessage: formData.stateMessage,
-			name: formData.name,
-            gender: formData.gender
 		});
 	}
 </script>
-
 <SignedIn let:user>
 	<Value path='/users/{user.uid}/photoUrl' let:value hydrate={formData.photoUrl}>
 		<slot name="imageUrl" value={value}>

@@ -1,12 +1,14 @@
 import type { MapMap } from "$lib/interfaces.js";
 import {
     Database,
+    equalTo,
     limitToFirst,
     onValue,
     orderByChild,
     query,
     ref,
     startAt,
+    get as getDb,
     type DatabaseReference,
     type Query,
     type Unsubscribe,
@@ -38,6 +40,7 @@ interface FetchOptions {
     limit: number;
     hydrate?: MapMap;
     orderField?: string;
+    searchFilter?: string
 }
 
 /**
@@ -59,7 +62,6 @@ export function reset() {
  */
 export function fetch(o: FetchOptions) {
 
-
     if (o.hydrate) {
         values.update((obj) => ({ ...obj, ...o.hydrate }));
     }
@@ -79,12 +81,12 @@ export function fetch(o: FetchOptions) {
     const listRef: DatabaseReference = ref(o.rtdb, o.path);
     let q: Query = query(listRef);
     q = query(listRef, orderByChild(o.orderField!));
+    if(o.searchFilter != '' && o.searchFilter) q = query(q, equalTo(o.searchFilter)) 
     if (lastOderValue) q = query(q, startAt(lastOderValue));
     q = query(q, limitToFirst(o.limit));
 
     // Subscribe to the query
     subscriptions.push(onValue(q, (snapshot) => {
-
         // Process the snapshot. Save the data to the store.
         const data: MapMap = get(values) ?? {};
         snapshot.forEach((childSnapshot) => {

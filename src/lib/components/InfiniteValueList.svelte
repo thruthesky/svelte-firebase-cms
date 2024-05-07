@@ -11,12 +11,13 @@
 	export let path: string;
 	export let orderField: string = 'order';
 	export let autoFetch: boolean = true;
+	export let searchFilter: string = '';
 
 	let unsubscribe: () => void;
 
 	const rtdb = getDatabase();
 
-	fetch({ rtdb, path, limit: 10, hydrate , orderField });
+	fetch({ rtdb, path, limit: 10, hydrate , orderField, searchFilter });
 
 	onMount(() => {
 		console.log('InfiniteValueList mounted');
@@ -37,7 +38,7 @@
 
 	export function onReset() {
 		reset();
-		fetch({ rtdb, path, limit: 10 , orderField});
+		fetch({ rtdb, path, limit: 10 , orderField, searchFilter});
 	}
 
 	function onScroll(e: Event) {
@@ -54,7 +55,7 @@
 		// Load more data when the user scrolls to the bottom of the page
 		if (bottom <= 300) {
 			console.log('--> (hit) reached at bottom;', bottom);
-			fetch({ rtdb, path, limit: 5 ,  orderField});
+			fetch({ rtdb, path, limit: 5 ,  orderField ,searchFilter});
 		}
 	}
 </script>

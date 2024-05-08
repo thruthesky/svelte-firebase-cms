@@ -1,9 +1,12 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
-	import { userUpdate } from '$lib/functions/user.functions.js';
+	import { userGet, userUpdate } from '$lib/functions/user.functions.js';
 	import { RecaptchaVerifier, getAuth, signInWithPhoneNumber, type ConfirmationResult } from 'firebase/auth';
 	import { serverTimestamp } from 'firebase/database';
 	import { onMount } from 'svelte';
+
+
+	export let redirectPath: string = '/';
 
 
     let inputPhoneNumber : string;
@@ -39,7 +42,7 @@
 	// get the phone number from the input field and trim it making sure that the user input is valid 
 	// user might enter some spaces and other character like dashes and underscores
 	export function  getPhoneNumber(number:string) {
-		if(number == undefined) return '';
+		if(number == undefined || number == '') return '';
 		number = number.replace(/[\s\-\(\)]/g, '');
 		// if the number is Philippines phone number 
 		number = number.replace(/^09/, '+639');
@@ -55,19 +58,29 @@
 			return 'long'
 		}else if (number.length < 12){
 			return 'short';
+		}else{
+			return 'invalid';
 		}
-		return '';
 	}
 
 	// by exporting this function will allow the parent components to use this component 
    export function onPhoneNumberSubmit(inputPhoneNumber: string){
+	errorMessage =''
 		const phoneNumber = getPhoneNumber(inputPhoneNumber);
-		if (phoneNumber === '') {
+		if (phoneNumber == '') {
 			errorMessage =  'Please enter a valid phone number. The phone number field cannot be empty. Please provide your phone number to proceed.'
 			return;
-		}else if (phoneNumber === 'long'){
+		}else if (phoneNumber == 'long'){
 		errorMessage = 'Invalid phone number, Phone number is too long'
 		return;
+		} 
+		else if(phoneNumber == 'short'){
+			errorMessage = 'Invalid phone number, Phone number is too short' 
+			return;
+		}
+		else if(phoneNumber == 'invalid') {
+			errorMessage = 'Invalid phone number, Please enter a valid phone number' 
+			return;
 		}
 
         signInWithPhoneNumber(auth, import.meta.env.MODE == "dev" ?  phoneNumber : '+821011111111', recaptchaVerifier)
@@ -86,6 +99,7 @@
             .catch((error) => {
                 // Error; SMS not sent
                 // ...
+				errorMessage = 'Invalid phone number, Please enter a valid phone number';
 				console.log(error)
             }); 
     }
@@ -103,17 +117,32 @@
 	
 	// sms code verification 
     export function onSmsCodeSubmit(inputSmsCode: string){
+		successMessage  = ''
 		const smsCode = getSmsCode(inputSmsCode)
+		if(smsCode  == '') {
+			errorMessage =  "SMS Code cannot be empty"
+			return ;
+		}
         globalConfirmationResult
 			.confirm(smsCode)
-			.then((result: any) => {
+			.then(async (result: any) => {
 				// User signed in successfully.
 				successMessage = 'Login successfully';
 				alert(successMessage + " "+result.user.uid);
-				userUpdate({
+
+				const user = await userGet(result.user.uid);
+				if(user.createdAt !=  null && user.createdAt != undefined){
+					userUpdate({
 						lastLogin : serverTimestamp(),
 					});
-				goto('/')
+
+				}else{
+					userUpdate({
+						lastLogin : serverTimestamp(),
+						createdAt : serverTimestamp(),
+					});
+				}
+				goto(redirectPath);
 				})
 			.catch((error: any ) => {
 				// User couldn't sign in (bad verification code?)

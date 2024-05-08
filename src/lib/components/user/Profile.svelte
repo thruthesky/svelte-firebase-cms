@@ -5,7 +5,13 @@
 	import { getAuth } from 'firebase/auth';
 	import { onMount } from 'svelte';
 	import Value from '../Value.svelte';
-	export let formData: UserInterface = {};
+
+	export let formData: UserInterface = {
+		displayName: '',
+        stateMessage: '',
+        photoUrl:'',
+	};
+
 
 	onMount(async () => {
 		getAuth().onAuthStateChanged(async (user) => {
@@ -14,8 +20,10 @@
 			}
 		});
 	});
+
+	// you can upload a phone on storage and then update the photoUrl
+
  export function onChangeFile(event: any) {
-console.log('change file')
 		uploadPhoto(event, formData.uid, {
 			deleteUrl: formData.photoUrl,
 			callback: (url) => {
@@ -25,17 +33,16 @@ console.log('change file')
 			}
 		});
 	}
+
+	// update the data from rtdb 
 export function onSubmit() {
 		console.log('submit');
 		userUpdate({
 			displayName: formData.displayName,
-			stateMessage: formData.stateMessage
+			stateMessage: formData.stateMessage,
 		});
 	}
 </script>
-
-<h1>Profile</h1>
-
 <SignedIn let:user>
 	<Value path='/users/{user.uid}/photoUrl' let:value hydrate={formData.photoUrl}>
 		<slot name="imageUrl" value={value}>
@@ -44,7 +51,6 @@ export function onSubmit() {
 
 	</Value>
 	<slot name="profile">
-	
 		<input type="file" accept="image/png, image/jpeg, image/jpg" on:change={onChangeFile} />
 		<form on:submit|preventDefault={onSubmit}>
 			<p>

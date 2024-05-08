@@ -141,8 +141,6 @@
 						lastLogin : serverTimestamp(),
 						createdAt : serverTimestamp(),
 					});
-
-
 				}
 				goto(redirectPath);
 				})

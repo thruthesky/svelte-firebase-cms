@@ -21,7 +21,7 @@ export class SvelteFirebaseCms {
         this.initialized = true;
 
         this.app = options.app;
-
+        console.log('this.app', this.app);
 
         const auth = getAuth(this.app);
         onAuthStateChanged(auth, (user) => {

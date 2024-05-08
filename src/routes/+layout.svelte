@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { SvelteFirebaseCms } from '$lib/svelte-firebase-cms.js';
 	import { getApp } from 'firebase/app';
 	import { initializeFirebaseClient } from '../init.firebase.client.js';

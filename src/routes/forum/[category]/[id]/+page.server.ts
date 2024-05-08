@@ -1,5 +1,5 @@
 import { Database, get, getDatabase, ref } from 'firebase/database';
-import { initializeFirebaseClient } from '../../../../init.firebase.client.js';
+import { initializeFirebaseClient } from '../../../../init.firebase.client';
 import { PUBLIC_FIREBASE_CLIENT_CONFIG } from '$env/static/public';
 
 

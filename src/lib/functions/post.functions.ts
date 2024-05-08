@@ -1,7 +1,6 @@
-import { PUBLIC_FIREBASE_CLIENT_CONFIG } from "$env/static/public";
 import type { MapMap } from "$lib/interfaces.js";
 import { DataSnapshot, Database, get, getDatabase, limitToFirst, orderByChild, push, query, ref, update, type DatabaseReference, type Query } from "firebase/database";
-import { initializeFirebaseClient } from "../../init.firebase.client.js";
+
 import { getAuth } from "firebase/auth";
 
 export interface PostListOption {

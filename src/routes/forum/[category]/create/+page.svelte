@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { page } from '$app/stores';
 	import NotSignedIn from '$lib/components/NotSignedIn.svelte';
@@ -38,4 +38,4 @@
 
 		<button>Submit</button>
 	</form>
-</SignedIn>
+</SignedIn> -->

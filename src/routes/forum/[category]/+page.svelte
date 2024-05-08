@@ -1,4 +1,4 @@
-<script lang="ts">
+<!-- <script lang="ts">
 	import InfiniteValueList from '$lib/components/InfiniteValueList.svelte';
 
 	export let data;
@@ -27,4 +27,4 @@
 		No more posts
 	</p>
 	<p slot="loading">Loading data...</p>
-</InfiniteValueList>
+</InfiniteValueList> -->

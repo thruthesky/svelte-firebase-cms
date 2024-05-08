@@ -1,4 +1,4 @@
-<script>
+<!-- <script>
 	import { page } from '$app/stores';
 	import Value from '$lib/components/Value.svelte';
 
@@ -15,4 +15,4 @@
 		<h1>{value.title}</h1>
 		<p>{value.content}</p>
 	</Value>
-</section>
+</section> -->

@@ -1,26 +1,26 @@
-import { Database, get, getDatabase, ref } from 'firebase/database';
-import { initializeFirebaseClient } from '../../../../init.firebase.client';
-import { PUBLIC_FIREBASE_CLIENT_CONFIG } from '$env/static/public';
+// import { Database, get, getDatabase, ref } from 'firebase/database';
+// import { initializeFirebaseClient } from '../../../../init.firebase.client';
+// import { PUBLIC_FIREBASE_CLIENT_CONFIG } from '$env/static/public';
 
 
-export async function load({ params }) {
+// export async function load({ params }) {
 
-    initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
-    const rtdb: Database = getDatabase();
+//     initializeFirebaseClient(JSON.parse(PUBLIC_FIREBASE_CLIENT_CONFIG));
+//     const rtdb: Database = getDatabase();
 
-    const category = params.category;
-    const id = params.id;
+//     const category = params.category;
+//     const id = params.id;
 
-    const postRef = ref(rtdb, 'posts/' + category + '/' + id);
+//     const postRef = ref(rtdb, 'posts/' + category + '/' + id);
 
-    const snapshot = await get(postRef);
+//     const snapshot = await get(postRef);
 
-    return {
-        category,
-        id,
-        post: snapshot.val(),
-    };
-}
+//     return {
+//         category,
+//         id,
+//         post: snapshot.val(),
+//     };
+// }
 
 
 

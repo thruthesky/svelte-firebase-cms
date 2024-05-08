@@ -1,8 +1,12 @@
 <script lang="ts">
-	import { postGet, postUpdate, type PostInterface } from '$lib/functions/post.functions.js';
 	import { onMount } from 'svelte';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
+	import {
+		postGet,
+		postUpdate,
+		type PostInterface
+	} from '$lib/svelte-firebase-cms/functions/post.functions';
 
 	let formData: PostInterface;
 

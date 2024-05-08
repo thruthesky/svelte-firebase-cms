@@ -16,3 +16,4 @@
 {:else}
 	<slot name="loading" />
 {/if}
+.

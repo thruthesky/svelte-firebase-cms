@@ -11,11 +11,7 @@ let formData: UserInterface = {
 };
 
 </script>
-<!--
-  @component
 
-  some markdown here
--->
 <Profile bind:this={profile} bind:formData={formData} >
 <div  slot="imageUrl" let:value>
 	<img  src={value} alt=""  width="200">

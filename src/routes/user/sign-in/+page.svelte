@@ -6,7 +6,6 @@ import PhoneSignIn from '$lib/components/user/PhoneSignIn.svelte';
 	let phoneSignIn: any;
 
 </script>
-
 Signin
 <!-- binding this components allow us to use the methods and properties inside the component -->
 <PhoneSignIn bind:this={phoneSignIn} >

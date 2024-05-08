@@ -18,7 +18,6 @@ const anonymousUrl =
 	
  }
 
- let hydrate: MapMap;
  function onCancelSearch(){
 	searchUser = '';
 	infiniteScroll.onReset();

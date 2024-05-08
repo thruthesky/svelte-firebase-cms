@@ -107,12 +107,12 @@
 
 	// get the sms code from the input field and trim it making sure that the user input is valid sms code
 	function getSmsCode(code : string){
-		if(code == undefined) return '';
+		if(code == undefined || code == '') return '';
 		code = code.replace(/\D/g, '');
 		if (code.length == 6) {
 			return code;
 		}
-		return '';
+		return 'invalid';
 	}
 	
 	// sms code verification 
@@ -122,6 +122,9 @@
 		if(smsCode  == '') {
 			errorMessage =  "SMS Code cannot be empty"
 			return ;
+		}else if(smsCode == 'invalid'){
+			errorMessage =  "Invalid SMS Code. Please check your input SMS code if its correct or if you put the correct phone number"
+			return;
 		}
         globalConfirmationResult
 			.confirm(smsCode)

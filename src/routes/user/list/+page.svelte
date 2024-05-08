@@ -21,7 +21,6 @@ const anonymousUrl =
  let hydrate: MapMap;
  function onCancelSearch(){
 	searchUser = '';
-	hydrate = {};
 	infiniteScroll.onReset();
  }
 </script>
@@ -31,7 +30,7 @@ const anonymousUrl =
 
 <button on:click={onSearchUser}>Search</button>
 <button on:click={onCancelSearch}>Cancel</button>
-<InfiniteValueList path={'users'} let:value autoFetch={true} hydrate={hydrate} orderField='displayName' searchFilter={searchUser} bind:this={infiniteScroll}>
+<InfiniteValueList path={'users'} let:value autoFetch={true} orderField='displayName' searchFilter={searchUser} bind:this={infiniteScroll}>
 <p style="padding: 2em;">
 	<img src={value.photoUrl == undefined ? anonymousUrl: value.photoUrl} alt="" srcset="" width="40" height="40">	{value.key}, {value.displayName}
 	</p>
